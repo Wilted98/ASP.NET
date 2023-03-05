@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../_models/user';
 
 @Component({
@@ -8,13 +9,7 @@ import { User } from '../_models/user';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  registerMode = false;
-  users: User[] = [];
-
   constructor() {}
-  registerToggle() {
-    this.registerMode = !this.registerMode;
-  }
 
   ngOnInit(): void {}
 }

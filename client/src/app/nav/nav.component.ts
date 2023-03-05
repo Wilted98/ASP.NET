@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
@@ -11,7 +12,10 @@ import { AccountService } from '../_services/account.service';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(public accountService: AccountService) {}
+  constructor(
+    public accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -21,7 +25,14 @@ export class NavComponent implements OnInit {
         console.log(response);
       },
       error: (err) => {
-        console.log(err);
+        if (err.error.errors != undefined) {
+          const { errors } = err.error;
+          Object.keys(errors).map((eroare) => {
+            this.toastr.error(errors[eroare]);
+          });
+        } else {
+          this.toastr.error(err.error);
+        }
       },
     });
   }
